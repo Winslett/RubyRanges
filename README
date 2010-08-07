@@ -1,0 +1,98 @@
+h1. RubyRanges
+
+RubyRanges is my attempt to move names of Rails gems back to sane naming
+conventions.  Just because you can name a gem something fun, doesn't mean I can
+find it. I could have named it LoneRanges, HomeOnTheRanges, or RangingOut, but I
+didn't.  I named it what it is: RubyRanges.
+
+:)
+
+h2. For the serious documentation:
+
+The real reason I created the ranges is to be able to treat ranges similar to
+arrays instead of using "to_a" -- which causes inefficiencies.  I think of
+adding Ranges as a consolidating overlay.  I think of subtracting arrays as
+a shark bite -- whatever that means to you.
+
+h3. Quick Examples
+
+Below are some examples of work, take a look at the tests for more:
+
+h4. Ultimately, I wanted to do something like this:
+
+<pre>
+  (4..88) - (33..45) + (115..122) + (85..110) => [4..33, 45..110, 115..122]
+</pre>
+
+h4. But wait, it works with dates too:
+
+<pre>
+  (Time.now..Time.now + 180) + (Time.now + 360..Time.now + 400) - (Time.now + 380..Time.now + 395) =>
+    [Sat Aug 07 00:45:09 -0500 2010..Sat Aug 07 00:48:09 -0500 2010, Sat Aug 07 00:51:09 -0500 2010..Sat Aug 07 00:51:49 -0500 2010]
+</pre>
+
+h4. And it works with letters: (which I really don't have a usage for)
+
+<pre>
+  ("A".."FB") + ("P".."DE") - ("BC".."MA") => "A".."BC"
+</pre>
+
+(Psst. . . it works with anything Ruby creates a range with)
+
+h3. Long Examples
+
+h4. Addition
+
+<pre>
+  (1..9) + (4..7)  => (1..9)
+  (4..7) + (1..9)  => (1..9)
+  (1..9) + (5..12) => (1..12)
+  (1..9) + (-5..5) => (-5..9)
+</pre>
+
+h4. Addition with non-continuous ranges
+
+<pre>
+  (1..4) + (8..9)  => RubyRanges::ArrayOfRanges.new(1..4, 8..9)
+</pre>
+
+h4. Subtraction
+
+<pre>
+  (1..9) - (5..7)  => RubyRanges::ArrayOfRanges.new(1..5, 7..9)
+
+  (1..9) - (6..12)  => 1..6
+  (1..9) - (-1..4)  => 4..9
+  (1..9) - (-1..10) => nil
+
+  (1..9) - (11..12) => 1..9
+</pre>
+
+h4. Now for ArrayOfRanges
+
+I created the ArrayOfRanges to give some special actions to +, -, and flatten_ranges
+for sets of Ranges.  Below are some usage examples.
+
+<pre>
+  ArrayOfRanges.new((1..4), (18..20)) + ArrayOfRanges.new((12..15), (6..9)) =>
+    ArrayOfRanges.new((1..4), (6..9), (12..15), (18..20))
+
+  ArrayOfRanges.new((1..10), (15..25)) + ArrayOfRanges.new((8..23), (25..28)) => 1..28
+
+  ArrayOfRanges.new(10..15, 20..25) + ArrayOfRanges.new(5..13, 18..22) =>
+    ArrayOfRanges.new(5..15, 18..25)
+
+  ArrayOfRanges.new(10..15, 20..25) + ArrayOfRanges.new(13..18, 23..28) =>
+    ArrayOfRanges.new(10..18, 20..28)
+  end
+
+  ArrayOfRanges.new(10..15, 20..25) + (28..30) =>
+    ArrayOfRanges.new(10..15, 20..25, 28..30)
+
+  ArrayOfRanges.new(10..15, 20..25) + (13..22) => 10..25
+
+  ArrayOfRanges.new(10..15, 20..25) + (18..22) => ArrayOfRanges.new(10..15, 18..25)
+</pre>
+
+Have fun, please donate if you fix / change.  Licenses are for the lawyers, if you're
+a lawyer, this is GPLv3.  If you're a coder, this is code.
