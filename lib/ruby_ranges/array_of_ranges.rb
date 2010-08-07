@@ -17,6 +17,21 @@ module RubyRanges
       array_of_ranges.flatten_ranges
     end
 
+    def -(object)
+      raise "Expecting ArrayOfRanges or Range, but was #{object.class} : #{object.inspect}" unless object.is_a?(Range) || object.is_a?(ArrayOfRanges)
+      if object.is_a?(Range)
+        array_of_ranges = inject([]) do |new, range|
+          new.old_plus([range - object])
+        end
+      else
+        other = self
+        object.each do |other_range|
+          other = ArrayOfRanges.new(other - other_range).flatten
+        end
+        other
+      end
+    end
+
     def flatten_ranges
       new = []
       

@@ -46,35 +46,43 @@ class RubyRanges::ArrayOfRangesTest < Test::Unit::TestCase
   end
 
   def test_subtracting_mutually_exclusive_array_of_ranges
-    pending
+    output = ArrayOfRanges.new(10..15, 20..25) - ArrayOfRanges.new(17..19, 27..30)
+    assert_equal ArrayOfRanges.new(10..15, 20..25), output
   end
 
   def test_subtracting_spanning_array_of_ranges
-    pending
+    output = ArrayOfRanges.new(10..15, 20..25) - ArrayOfRanges.new(13..22, 24..30)
+    assert_equal ArrayOfRanges.new(10..13, 22..24), output
   end
 
-  def test_subtracting_downward_exclusive_array_of_ranges
-    pending
+  def test_subtracting_downward_inclusive_array_of_ranges
+    output = ArrayOfRanges.new(10..15, 20..25) - ArrayOfRanges.new(8..12, 18..22)
+    assert_equal ArrayOfRanges.new(12..15, 22..25), output
   end
 
-  def test_subtracting_upward_exclusive_array_of_ranges
-    pending
+  def test_subtracting_upward_inclusive_array_of_ranges
+    output = ArrayOfRanges.new(10..15, 20..25) - ArrayOfRanges.new(13..18, 24..30)
+    assert_equal ArrayOfRanges.new(10..13, 20..24), output
   end
 
-  def test_subtracting_mutually_exclusive_range_from_array_of_ranges
-    pending
+  def test_subtracting_mutually_inclusive_range_from_array_of_ranges
+    output = ArrayOfRanges.new(10..15, 20..25) - (17..19)
+    assert_equal ArrayOfRanges.new(10..15, 20..25), output
   end
 
   def test_subtracting_spanning_range_from_array_of_ranges
-    pending
+    output = ArrayOfRanges.new(10..15, 20..25) - (13..22)
+    assert_equal ArrayOfRanges.new(10..13, 22..25), output
   end
 
-  def test_subtracting_downward_exclusive_range_from_array_of_ranges
-    pending
+  def test_subtracting_downward_inclusive_range_from_array_of_ranges
+    output = ArrayOfRanges.new(10..15, 20..25) - (18..22)
+    assert_equal ArrayOfRanges.new(10..15, 22..25), output
   end
 
-  def test_subtracting_upward_exclusive_range_from_array_of_ranges
-    pending
+  def test_subtracting_upward_inclusive_range_from_array_of_ranges
+    output = ArrayOfRanges.new(10..15, 20..25) - (13..18)
+    assert_equal ArrayOfRanges.new(10..13, 20..25), output
   end
   
 end
