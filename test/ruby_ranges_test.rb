@@ -18,6 +18,11 @@ class RubyRanges::RangeTest < Test::Unit::TestCase
     assert_equal RubyRanges::WhollyIncluded, (1..9).include?(4..7)
   end
 
+  def test_include_inverse_wholly_inclusive_range
+    assert_equal nil, (4..7).include?(1..9).to_value
+    assert_equal RubyRanges::InverseWhollyIncluded, (4..7).include?(1..9)
+  end
+
   def test_include_exclusive_range
     assert_equal false, (1..9).include?(10..12).to_value
   end
