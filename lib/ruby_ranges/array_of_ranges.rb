@@ -1,3 +1,7 @@
+class Array
+  alias :old_plus :+
+end
+
 module RubyRanges
   class ArrayOfRanges < Array
 
@@ -8,7 +12,7 @@ module RubyRanges
     end
 
     def +(object)
-      raise "Expecting ArrayOfRanges or Range, but was #{object.inspect.class} : #{object.inspect}" unless object.is_a?(Range) || object.is_a?(ArrayOfRanges)
+      raise "Expecting ArrayOfRanges or Range, but was #{object.class} : #{object.inspect}" unless object.is_a?(Range) || object.is_a?(ArrayOfRanges)
       array_of_ranges = ArrayOfRanges.new((object.is_a?(Range) ? (self.old_plus([object])) : super(object)))
       array_of_ranges.flatten_ranges
     end
@@ -23,8 +27,7 @@ module RubyRanges
           last = new.pop + range
 
           new = last.is_a?(RubyRanges::ArrayOfRanges) ?
-            (new << last.to_a.flatten).flatten : (new << last)
-          
+            new.old_plus(last) : (new << last)
         end
       end
 
