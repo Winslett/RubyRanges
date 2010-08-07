@@ -1,0 +1,3 @@
+class ArrayOfRanges < Array
+
+end
