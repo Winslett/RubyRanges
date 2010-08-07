@@ -1,11 +1,31 @@
-class RubyRanges
+module RubyRanges
   module Range
+
+    def self.included(base)
+      base.send(:define_method, :include?) do |object|
+        object.is_a?(Range) ? include_range?(object) : super(object)
+      end
+    end
+    
     def +(range)
       add_range(range)
     end
 
     def -(range)
       subtract_range(range)
+    end
+
+    def include_range?(range)
+      case
+      when self.include?(range.begin) && self.include?(range.end) # wholly inclusive
+        RubyRanges::WhollyIncluded
+      when self.include?(range.begin) && self.end < range.end # upload inclusive
+        RubyRanges::UpwardIncluded
+      when self.include?(range.end) && self.begin > range.begin # downward inclusive
+        RubyRanges::DownwardIncluded
+      else # exclusive range
+        RubyRanges::MutuallyExcluded
+      end
     end
 
     private

@@ -1,7 +1,9 @@
-class ArrayOfRanges < Array
+module RubyRanges
+  class ArrayOfRanges < Array
 
-  def initialize(*args)
-    args.each { |arg| self << arg }
-  end
+    def initialize(*args)
+      args.each { |arg| self << arg }
+    end
   
+  end
 end
