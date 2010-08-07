@@ -50,6 +50,10 @@ class RubyRanges::RangeTest < Test::Unit::TestCase
     assert_equal RubyRanges::ArrayOfRanges.new((1..4), (8..9)), output
   end
 
+  def test_adding_array_of_ranges
+    pending
+  end
+
   def test_subtracting_wholly_included_range
     output = (1..9) - (5..7)
     assert_equal RubyRanges::ArrayOfRanges.new(1..5, 7..9), output
@@ -72,6 +76,22 @@ class RubyRanges::RangeTest < Test::Unit::TestCase
   def test_subtracting_exclusive_range
     output = (1..9) - (11..12)
     assert_equal 1..9, output
+  end
+
+  def test_subtracting_wholly_inclusive_array_of_ranges
+    pending
+  end
+
+  def test_subtracting_mutually_exclusive_array_of_ranges
+    pending
+  end
+
+  def test_subtracting_downward_exclusive_array_of_ranges
+    pending
+  end
+
+  def test_subtracting_upward_exclusive_array_of_ranges
+    pending
   end
   
 end
