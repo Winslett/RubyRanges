@@ -33,13 +33,13 @@ module RubyRanges
     private
     def add_range(range)
       case self.include?(range).to_value
-      when TrueClass # self swallows smaller range
+      when RubyRanges::WhollyIncluded.to_value # self swallows smaller range
         self
-      when NilClass # self swallowed by larger range
+      when RubyRanges::InverseWhollyIncluded.to_value # self swallowed by larger range
         range
-      when 1 # add upward inclusive range
+      when RubyRanges::UpwardIncluded.to_value # add upward inclusive range
         self.begin..range.end
-      when -1 # add downward inclusive range
+      when RubyRanges::DownwardIncluded.to_value # add downward inclusive range
         range.begin..self.end
       else # mutually exclusive
         ArrayOfRanges.new(self, range)
