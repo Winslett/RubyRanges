@@ -53,13 +53,13 @@ h4. Addition
 h4. Addition with non-continuous ranges
 
 <pre>
-  (1..4) + (8..9)  => RubyRanges::ArrayOfRanges.new(1..4, 8..9)
+  (1..4) + (8..9)  => RubyRanges::Array.new(1..4, 8..9)
 </pre>
 
 h4. Subtraction
 
 <pre>
-  (1..9) - (5..7)  => RubyRanges::ArrayOfRanges.new(1..5, 7..9)
+  (1..9) - (5..7)  => RubyRanges::Ranges.new(1..5, 7..9)
 
   (1..9) - (6..12)  => 1..6
   (1..9) - (-1..4)  => 4..9
@@ -68,30 +68,30 @@ h4. Subtraction
   (1..9) - (11..12) => 1..9
 </pre>
 
-h4. Now for ArrayOfRanges
+h4. Now for RubyRanges::Array
 
-I created the ArrayOfRanges to give some special actions to +, -, and flatten_ranges
+I created the RubyRanges::Array to give some special actions to +, -, and flatten_ranges
 for sets of Ranges.  Below are some usage examples.
 
 <pre>
-  ArrayOfRanges.new((1..4), (18..20)) + ArrayOfRanges.new((12..15), (6..9)) =>
-    ArrayOfRanges.new((1..4), (6..9), (12..15), (18..20))
+  RubyRanges::Array.new((1..4), (18..20)) + RubyRanges::Array.new((12..15), (6..9)) =>
+    RubyRanges::Array.new((1..4), (6..9), (12..15), (18..20))
 
-  ArrayOfRanges.new((1..10), (15..25)) + ArrayOfRanges.new((8..23), (25..28)) => 1..28
+  RubyRanges::Array.new((1..10), (15..25)) + RubyRanges::Array.new((8..23), (25..28)) => 1..28
 
-  ArrayOfRanges.new(10..15, 20..25) + ArrayOfRanges.new(5..13, 18..22) =>
-    ArrayOfRanges.new(5..15, 18..25)
+  RubyRanges::Array.new(10..15, 20..25) + RubyRanges::Array.new(5..13, 18..22) =>
+    RubyRanges::Array.new(5..15, 18..25)
 
-  ArrayOfRanges.new(10..15, 20..25) + ArrayOfRanges.new(13..18, 23..28) =>
-    ArrayOfRanges.new(10..18, 20..28)
+  RubyRanges::Array.new(10..15, 20..25) + RubyRanges::Array.new(13..18, 23..28) =>
+    RubyRanges::Array.new(10..18, 20..28)
   end
 
-  ArrayOfRanges.new(10..15, 20..25) + (28..30) =>
-    ArrayOfRanges.new(10..15, 20..25, 28..30)
+  RubyRanges::Array.new(10..15, 20..25) + (28..30) =>
+    RubyRanges::Array.new(10..15, 20..25, 28..30)
 
-  ArrayOfRanges.new(10..15, 20..25) + (13..22) => 10..25
+  RubyRanges::Array.new(10..15, 20..25) + (13..22) => 10..25
 
-  ArrayOfRanges.new(10..15, 20..25) + (18..22) => ArrayOfRanges.new(10..15, 18..25)
+  RubyRanges::Array.new(10..15, 20..25) + (18..22) => RubyRanges::Array.new(10..15, 18..25)
 </pre>
 
 Have fun, please donate if you fix / change.  Licenses are for the lawyers, if you're

@@ -42,7 +42,7 @@ module RubyRanges
       when RubyRanges::DownwardIncluded.to_value # add downward inclusive range
         range.begin..self.end
       else # mutually exclusive
-        ArrayOfRanges.new(self, range)
+        Array.new(self, range)
       end
     end
 
@@ -51,7 +51,7 @@ module RubyRanges
       when NilClass # self removed by larger range
         nil
       when TrueClass # self split by wholly inclusive range
-        ArrayOfRanges.new(self.begin..range.begin, range.end..self.end)
+        Array.new(self.begin..range.begin, range.end..self.end)
       when 1 # self shortened by upload inclusive range
         self.begin..range.begin
       when -1 # self shortened by downward inclusive range
