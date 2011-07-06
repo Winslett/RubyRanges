@@ -5,6 +5,14 @@ class RubyRanges::RangeTest < Test::Unit::TestCase
 
   include RubyRanges
 
+  def test_include_integer
+    assert (1..9).include?(3)
+  end
+
+  def test_include_real_number
+    assert (1..9).include?(3.5)
+  end
+
   def test_include_partial_downward_range
     assert_equal -1, (1..9).include?(-1..3).to_value
     assert_equal RubyRanges::DownwardIncluded, (1..9).include?(-1..3)
@@ -52,10 +60,6 @@ class RubyRanges::RangeTest < Test::Unit::TestCase
     assert_equal RubyRanges::Array.new((1..4), (8..9)), output
   end
 
-  def test_adding_ruby_ranges_array
-    pending
-  end
-
   def test_subtracting_wholly_included_range
     output = (1..9) - (5..7)
     assert_equal RubyRanges::Array.new(1..5, 7..9), output
@@ -80,20 +84,4 @@ class RubyRanges::RangeTest < Test::Unit::TestCase
     assert_equal 1..9, output
   end
 
-  def test_subtracting_wholly_inclusive_ruby_ranges_array
-    pending
-  end
-
-  def test_subtracting_mutually_exclusive_ruby_ranges_array
-    pending
-  end
-
-  def test_subtracting_downward_exclusive_ruby_ranges_array
-    pending
-  end
-
-  def test_subtracting_upward_exclusive_ruby_ranges_array
-    pending
-  end
-  
 end
