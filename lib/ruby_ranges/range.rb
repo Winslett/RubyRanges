@@ -21,14 +21,14 @@ module RubyRanges
 
     def include_range?(range)
       case
+      when self.include?(range.begin) && self.end <= range.end # upload inclusive
+        RubyRanges::UpwardIncluded
+      when self.include?(range.end) && self.begin >= range.begin # downward inclusive
+        RubyRanges::DownwardIncluded
       when self.include?(range.begin) && self.include?(range.end) # wholly inclusive
         RubyRanges::WhollyIncluded
       when range.include?(self.begin) && range.include?(self.end) # inverse wholly inclusive
         RubyRanges::InverseWhollyIncluded
-      when self.include?(range.begin) && self.end < range.end # upload inclusive
-        RubyRanges::UpwardIncluded
-      when self.include?(range.end) && self.begin > range.begin # downward inclusive
-        RubyRanges::DownwardIncluded
       else # exclusive range
         RubyRanges::MutuallyExcluded
       end
@@ -56,7 +56,7 @@ module RubyRanges
         nil
       when TrueClass # self split by wholly inclusive range
         RubyRanges::Array.new(self.begin..range.begin, range.end..self.end)
-      when 1 # self shortened by upload inclusive range
+      when 1 # self shortened by upward inclusive range
         self.begin..range.begin
       when -1 # self shortened by downward inclusive range
         range.end..self.end

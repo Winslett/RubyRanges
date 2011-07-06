@@ -60,6 +60,16 @@ class RubyRanges::RangeTest < Test::Unit::TestCase
     assert_equal RubyRanges::Array.new((1..4), (8..9)), output
   end
 
+  def test_subtracting_range_with_common_least_value
+    output = (1..10) - (1..10)
+    assert_equal (1..9), output
+  end
+
+  def test_subtracting_range_with_common_greatest_value
+    output = (1..10) - (9..10)
+    assert_equal (1..9), output
+  end
+
   def test_subtracting_wholly_included_range
     output = (1..9) - (5..7)
     assert_equal RubyRanges::Array.new(1..5, 7..9), output
